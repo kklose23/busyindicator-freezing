@@ -8,36 +8,32 @@
              Title="Monkeys"
              x:DataType="viewmodel:MonkeysViewModel">
 
-  <Grid>
+    <Grid>
+        <VerticalStackLayout>
+            <Button Text="Load"
+                    Command="{Binding ReloadCommand}" />
 
-    <ActivityIndicator IsRunning="{Binding IsBusy}"
-                       Margin="0,100,0,0"
-                       VerticalOptions="Start" />
+            <CollectionView ItemsSource="{Binding Items}">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Label Text="{Binding .}" />
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </VerticalStackLayout>
 
-    <telerik:RadBusyIndicator Grid.Row="1"
-                              AnimationType="Animation2"
-                              IsBusy="{Binding IsBusy}"
-                              AnimationContentHeightRequest="100"
-                              AnimationContentWidthRequest="100"
-                              AnimationContentColor="Black"
-                              x:Name="RadBusyIndicator">
-      <VerticalStackLayout>
+        <!-- Instead, you can put the RadBusyIndicator on top of the content 
+             Also notice how we are also binding to the IsVisible property, this will prevent blocking input gestures -->
+        <telerik:RadBusyIndicator IsBusy="{Binding IsBusy}"
+                                  IsVisible="{Binding IsBusy}"
+                                  AnimationType="Animation2"
+                                  AnimationContentHeightRequest="100"
+                                  AnimationContentWidthRequest="100"
+                                  AnimationContentColor="Black"
+                                  VerticalOptions="Center"
+                                  HorizontalOptions="Center"
+                                  BackgroundColor="#AAFFFFFF"
+                                  x:Name="RadBusyIndicator" />
 
-        <Button Text="Load"
-                Command="{Binding ReloadCommand}" />
-
-        <CollectionView ItemsSource="{Binding Items}">
-          <CollectionView.ItemTemplate>
-            <DataTemplate>
-              <Label Text="{Binding .}" />
-            </DataTemplate>
-          </CollectionView.ItemTemplate>
-        </CollectionView>
-
-      </VerticalStackLayout>
-
-    </telerik:RadBusyIndicator>
-
-  </Grid>
-
+    </Grid>
 </ContentPage>
