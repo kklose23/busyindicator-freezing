@@ -1,4 +1,5 @@
-﻿using MonkeyFinder.Services;
+﻿using CommonHelpers.Collections;
+using MonkeyFinder.Services;
 
 namespace MonkeyFinder.ViewModel;
 
@@ -6,23 +7,32 @@ public partial class MonkeysViewModel : BaseViewModel
 {
   public MonkeysViewModel()
   {
-    Items = new ObservableCollection<string>();
+    Items = new ObservableRangeCollection<string>();
   }
 
   [ObservableProperty]
   private bool _isBusy;
 
-  public ObservableCollection<string> Items { get; set; }
+  public ObservableRangeCollection<string> Items { get; set; }
 
   [RelayCommand]
   async Task ReloadAsync()
   {
     IsBusy = true;
+
     await Task.Delay(2000);
-    for (int i = 0; i < 300; i++)
-    {
-      Items.Add(i.ToString());
-    }
+
+    var newItems = await GetDataAsync(300);
+
+    Items.AddRange(newItems);
+
     IsBusy = false;
+  }
+
+  Task<IEnumerable<string>> GetDataAsync(int count)
+  {
+      var data = Enumerable.Range(0, count).Select(i => $"{i}");
+
+      return Task.FromResult(data);
   }
 }
