@@ -8,22 +8,19 @@
              Title="Monkeys"
              x:DataType="viewmodel:MonkeysViewModel">
 
-    <Grid>
-        <VerticalStackLayout>
-            <Button Text="Load"
-                    Command="{Binding ReloadCommand}" />
+    <Grid RowDefinitions="Auto, *">
+        <Button Text="Load"
+                Command="{Binding ReloadCommand}" />
 
-            <CollectionView ItemsSource="{Binding Items}">
-                <CollectionView.ItemTemplate>
-                    <DataTemplate>
-                        <Label Text="{Binding .}" />
-                    </DataTemplate>
-                </CollectionView.ItemTemplate>
-            </CollectionView>
-        </VerticalStackLayout>
+        <CollectionView ItemsSource="{Binding Items}"
+                        Grid.Row="1">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Label Text="{Binding .}" />
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
 
-        <!-- Instead, you can put the RadBusyIndicator on top of the content 
-             Also notice how we are also binding to the IsVisible property, this will prevent blocking input gestures -->
         <telerik:RadBusyIndicator IsBusy="{Binding IsBusy}"
                                   IsVisible="{Binding IsBusy}"
                                   AnimationType="Animation2"
@@ -33,7 +30,8 @@
                                   VerticalOptions="Center"
                                   HorizontalOptions="Center"
                                   BackgroundColor="#AAFFFFFF"
-                                  x:Name="RadBusyIndicator" />
+                                  x:Name="RadBusyIndicator" 
+                                  Grid.RowSpan="2"/>
 
     </Grid>
 </ContentPage>
